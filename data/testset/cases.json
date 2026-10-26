@@ -1,0 +1,1149 @@
+[
+  {
+    "id": "protein-bar--clean",
+    "product": "Almond protein bar",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "whey protein isolate",
+        "almonds",
+        "dates",
+        "cocoa butter",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Milk, Almonds",
+      "protein_g": 15.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "protein-bar--allergen_not_declared",
+    "product": "Almond protein bar",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "whey protein isolate",
+        "almonds",
+        "dates",
+        "cocoa butter",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Almonds",
+      "protein_g": 15.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "allergen_not_declared"
+  },
+  {
+    "id": "protein-bar--protein_claim_unsupported",
+    "product": "Almond protein bar",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "whey protein isolate",
+        "almonds",
+        "dates",
+        "cocoa butter",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Milk, Almonds",
+      "protein_g": 3.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "protein_claim_unsupported"
+  },
+  {
+    "id": "protein-bar--hidden_allergen_ingredient",
+    "product": "Almond protein bar",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "whey protein isolate",
+        "almonds",
+        "dates",
+        "cocoa butter",
+        "salt",
+        "soy lecithin"
+      ],
+      "allergen_statement": "Contains: Milk, Almonds",
+      "protein_g": 15.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "protein-bar--natural_claim_no_rule",
+    "product": "Almond protein bar",
+    "label": {
+      "claims": [
+        "High Protein",
+        "All Natural"
+      ],
+      "ingredients": [
+        "whey protein isolate",
+        "almonds",
+        "dates",
+        "cocoa butter",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Milk, Almonds",
+      "protein_g": 15.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "granola--clean",
+    "product": "Peanut granola",
+    "label": {
+      "claims": [
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "rolled oats",
+        "honey",
+        "canola oil",
+        "sea salt",
+        "peanuts"
+      ],
+      "allergen_statement": "Contains: Peanuts",
+      "protein_g": 7.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "granola--allergen_not_declared",
+    "product": "Peanut granola",
+    "label": {
+      "claims": [
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "rolled oats",
+        "honey",
+        "canola oil",
+        "sea salt",
+        "peanuts"
+      ],
+      "allergen_statement": null,
+      "protein_g": 7.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "allergen_not_declared"
+  },
+  {
+    "id": "granola--protein_claim_unsupported",
+    "product": "Peanut granola",
+    "label": {
+      "claims": [
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "rolled oats",
+        "honey",
+        "canola oil",
+        "sea salt",
+        "peanuts"
+      ],
+      "allergen_statement": "Contains: Peanuts",
+      "protein_g": 3.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "protein_claim_unsupported"
+  },
+  {
+    "id": "granola--hidden_allergen_ingredient",
+    "product": "Peanut granola",
+    "label": {
+      "claims": [
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "rolled oats",
+        "honey",
+        "canola oil",
+        "sea salt",
+        "peanuts",
+        "soy lecithin"
+      ],
+      "allergen_statement": "Contains: Peanuts",
+      "protein_g": 7.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "granola--natural_claim_no_rule",
+    "product": "Peanut granola",
+    "label": {
+      "claims": [
+        "Good Source of Protein",
+        "All Natural"
+      ],
+      "ingredients": [
+        "rolled oats",
+        "honey",
+        "canola oil",
+        "sea salt",
+        "peanuts"
+      ],
+      "allergen_statement": "Contains: Peanuts",
+      "protein_g": 7.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "gf-crackers--clean",
+    "product": "Sesame rice crackers",
+    "label": {
+      "claims": [
+        "Gluten-Free"
+      ],
+      "ingredients": [
+        "rice flour",
+        "tapioca starch",
+        "sunflower oil",
+        "sea salt",
+        "sesame seeds"
+      ],
+      "allergen_statement": "Contains: Sesame",
+      "protein_g": null,
+      "gluten_ppm": 8.0
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "gf-crackers--allergen_not_declared",
+    "product": "Sesame rice crackers",
+    "label": {
+      "claims": [
+        "Gluten-Free"
+      ],
+      "ingredients": [
+        "rice flour",
+        "tapioca starch",
+        "sunflower oil",
+        "sea salt",
+        "sesame seeds"
+      ],
+      "allergen_statement": null,
+      "protein_g": null,
+      "gluten_ppm": 8.0
+    },
+    "expected_overall": "fail",
+    "violation_type": "allergen_not_declared"
+  },
+  {
+    "id": "gf-crackers--false_high_protein_added",
+    "product": "Sesame rice crackers",
+    "label": {
+      "claims": [
+        "Gluten-Free",
+        "High Protein"
+      ],
+      "ingredients": [
+        "rice flour",
+        "tapioca starch",
+        "sunflower oil",
+        "sea salt",
+        "sesame seeds"
+      ],
+      "allergen_statement": "Contains: Sesame",
+      "protein_g": 2.0,
+      "gluten_ppm": 8.0
+    },
+    "expected_overall": "fail",
+    "violation_type": "false_high_protein_added"
+  },
+  {
+    "id": "gf-crackers--gluten_grain_in_gf_product",
+    "product": "Sesame rice crackers",
+    "label": {
+      "claims": [
+        "Gluten-Free"
+      ],
+      "ingredients": [
+        "rice flour",
+        "tapioca starch",
+        "sunflower oil",
+        "sea salt",
+        "sesame seeds",
+        "wheat flour"
+      ],
+      "allergen_statement": "Contains: Sesame, Wheat",
+      "protein_g": null,
+      "gluten_ppm": 8.0
+    },
+    "expected_overall": "fail",
+    "violation_type": "gluten_grain_in_gf_product"
+  },
+  {
+    "id": "gf-crackers--gluten_ppm_too_high",
+    "product": "Sesame rice crackers",
+    "label": {
+      "claims": [
+        "Gluten-Free"
+      ],
+      "ingredients": [
+        "rice flour",
+        "tapioca starch",
+        "sunflower oil",
+        "sea salt",
+        "sesame seeds"
+      ],
+      "allergen_statement": "Contains: Sesame",
+      "protein_g": null,
+      "gluten_ppm": 35.0
+    },
+    "expected_overall": "fail",
+    "violation_type": "gluten_ppm_too_high"
+  },
+  {
+    "id": "gf-crackers--hidden_allergen_ingredient",
+    "product": "Sesame rice crackers",
+    "label": {
+      "claims": [
+        "Gluten-Free"
+      ],
+      "ingredients": [
+        "rice flour",
+        "tapioca starch",
+        "sunflower oil",
+        "sea salt",
+        "sesame seeds",
+        "soy lecithin"
+      ],
+      "allergen_statement": "Contains: Sesame",
+      "protein_g": null,
+      "gluten_ppm": 8.0
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "gf-crackers--natural_claim_no_rule",
+    "product": "Sesame rice crackers",
+    "label": {
+      "claims": [
+        "Gluten-Free",
+        "All Natural"
+      ],
+      "ingredients": [
+        "rice flour",
+        "tapioca starch",
+        "sunflower oil",
+        "sea salt",
+        "sesame seeds"
+      ],
+      "allergen_statement": "Contains: Sesame",
+      "protein_g": null,
+      "gluten_ppm": 8.0
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "dark-chocolate--clean",
+    "product": "Dark chocolate bar",
+    "label": {
+      "claims": [],
+      "ingredients": [
+        "cocoa mass",
+        "sugar",
+        "cocoa butter",
+        "vanilla"
+      ],
+      "allergen_statement": null,
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "dark-chocolate--false_high_protein_added",
+    "product": "Dark chocolate bar",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "cocoa mass",
+        "sugar",
+        "cocoa butter",
+        "vanilla"
+      ],
+      "allergen_statement": null,
+      "protein_g": 2.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "false_high_protein_added"
+  },
+  {
+    "id": "dark-chocolate--hidden_allergen_ingredient",
+    "product": "Dark chocolate bar",
+    "label": {
+      "claims": [],
+      "ingredients": [
+        "cocoa mass",
+        "sugar",
+        "cocoa butter",
+        "vanilla",
+        "soy lecithin"
+      ],
+      "allergen_statement": null,
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "dark-chocolate--natural_claim_no_rule",
+    "product": "Dark chocolate bar",
+    "label": {
+      "claims": [
+        "All Natural"
+      ],
+      "ingredients": [
+        "cocoa mass",
+        "sugar",
+        "cocoa butter",
+        "vanilla"
+      ],
+      "allergen_statement": null,
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "yogurt--clean",
+    "product": "Plain yogurt",
+    "label": {
+      "claims": [
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "cultured pasteurized milk",
+        "live active cultures"
+      ],
+      "allergen_statement": "Contains: Milk",
+      "protein_g": 6.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "yogurt--allergen_not_declared",
+    "product": "Plain yogurt",
+    "label": {
+      "claims": [
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "cultured pasteurized milk",
+        "live active cultures"
+      ],
+      "allergen_statement": null,
+      "protein_g": 6.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "allergen_not_declared"
+  },
+  {
+    "id": "yogurt--protein_claim_unsupported",
+    "product": "Plain yogurt",
+    "label": {
+      "claims": [
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "cultured pasteurized milk",
+        "live active cultures"
+      ],
+      "allergen_statement": "Contains: Milk",
+      "protein_g": 3.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "protein_claim_unsupported"
+  },
+  {
+    "id": "yogurt--hidden_allergen_ingredient",
+    "product": "Plain yogurt",
+    "label": {
+      "claims": [
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "cultured pasteurized milk",
+        "live active cultures",
+        "soy lecithin"
+      ],
+      "allergen_statement": "Contains: Milk",
+      "protein_g": 6.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "yogurt--natural_claim_no_rule",
+    "product": "Plain yogurt",
+    "label": {
+      "claims": [
+        "Good Source of Protein",
+        "All Natural"
+      ],
+      "ingredients": [
+        "cultured pasteurized milk",
+        "live active cultures"
+      ],
+      "allergen_statement": "Contains: Milk",
+      "protein_g": 6.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "pasta--clean",
+    "product": "Egg pasta",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "durum wheat semolina",
+        "egg",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Wheat, Egg",
+      "protein_g": 12.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "pasta--allergen_not_declared",
+    "product": "Egg pasta",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "durum wheat semolina",
+        "egg",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Egg",
+      "protein_g": 12.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "allergen_not_declared"
+  },
+  {
+    "id": "pasta--protein_claim_unsupported",
+    "product": "Egg pasta",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "durum wheat semolina",
+        "egg",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Wheat, Egg",
+      "protein_g": 3.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "protein_claim_unsupported"
+  },
+  {
+    "id": "pasta--hidden_allergen_ingredient",
+    "product": "Egg pasta",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "durum wheat semolina",
+        "egg",
+        "salt",
+        "soy lecithin"
+      ],
+      "allergen_statement": "Contains: Wheat, Egg",
+      "protein_g": 12.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "pasta--natural_claim_no_rule",
+    "product": "Egg pasta",
+    "label": {
+      "claims": [
+        "High Protein",
+        "All Natural"
+      ],
+      "ingredients": [
+        "durum wheat semolina",
+        "egg",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Wheat, Egg",
+      "protein_g": 12.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "trail-mix--clean",
+    "product": "Nut trail mix",
+    "label": {
+      "claims": [],
+      "ingredients": [
+        "peanuts",
+        "raisins",
+        "sunflower seeds",
+        "cashews"
+      ],
+      "allergen_statement": "Contains: Peanuts, Cashews",
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "trail-mix--allergen_not_declared",
+    "product": "Nut trail mix",
+    "label": {
+      "claims": [],
+      "ingredients": [
+        "peanuts",
+        "raisins",
+        "sunflower seeds",
+        "cashews"
+      ],
+      "allergen_statement": "Contains: Cashews",
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "allergen_not_declared"
+  },
+  {
+    "id": "trail-mix--false_high_protein_added",
+    "product": "Nut trail mix",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "peanuts",
+        "raisins",
+        "sunflower seeds",
+        "cashews"
+      ],
+      "allergen_statement": "Contains: Peanuts, Cashews",
+      "protein_g": 2.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "false_high_protein_added"
+  },
+  {
+    "id": "trail-mix--hidden_allergen_ingredient",
+    "product": "Nut trail mix",
+    "label": {
+      "claims": [],
+      "ingredients": [
+        "peanuts",
+        "raisins",
+        "sunflower seeds",
+        "cashews",
+        "soy lecithin"
+      ],
+      "allergen_statement": "Contains: Peanuts, Cashews",
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "trail-mix--natural_claim_no_rule",
+    "product": "Nut trail mix",
+    "label": {
+      "claims": [
+        "All Natural"
+      ],
+      "ingredients": [
+        "peanuts",
+        "raisins",
+        "sunflower seeds",
+        "cashews"
+      ],
+      "allergen_statement": "Contains: Peanuts, Cashews",
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "pancake-mix--clean",
+    "product": "Gluten-free pancake mix",
+    "label": {
+      "claims": [
+        "Gluten-Free",
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "brown rice flour",
+        "buttermilk powder",
+        "egg white powder",
+        "baking soda"
+      ],
+      "allergen_statement": "Contains: Milk, Egg",
+      "protein_g": 6.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "pancake-mix--allergen_not_declared",
+    "product": "Gluten-free pancake mix",
+    "label": {
+      "claims": [
+        "Gluten-Free",
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "brown rice flour",
+        "buttermilk powder",
+        "egg white powder",
+        "baking soda"
+      ],
+      "allergen_statement": "Contains: Egg",
+      "protein_g": 6.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "allergen_not_declared"
+  },
+  {
+    "id": "pancake-mix--protein_claim_unsupported",
+    "product": "Gluten-free pancake mix",
+    "label": {
+      "claims": [
+        "Gluten-Free",
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "brown rice flour",
+        "buttermilk powder",
+        "egg white powder",
+        "baking soda"
+      ],
+      "allergen_statement": "Contains: Milk, Egg",
+      "protein_g": 3.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "protein_claim_unsupported"
+  },
+  {
+    "id": "pancake-mix--gluten_grain_in_gf_product",
+    "product": "Gluten-free pancake mix",
+    "label": {
+      "claims": [
+        "Gluten-Free",
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "brown rice flour",
+        "buttermilk powder",
+        "egg white powder",
+        "baking soda",
+        "wheat flour"
+      ],
+      "allergen_statement": "Contains: Milk, Egg, Wheat",
+      "protein_g": 6.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "gluten_grain_in_gf_product"
+  },
+  {
+    "id": "pancake-mix--gluten_ppm_too_high",
+    "product": "Gluten-free pancake mix",
+    "label": {
+      "claims": [
+        "Gluten-Free",
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "brown rice flour",
+        "buttermilk powder",
+        "egg white powder",
+        "baking soda"
+      ],
+      "allergen_statement": "Contains: Milk, Egg",
+      "protein_g": 6.0,
+      "gluten_ppm": 35.0
+    },
+    "expected_overall": "fail",
+    "violation_type": "gluten_ppm_too_high"
+  },
+  {
+    "id": "pancake-mix--hidden_allergen_ingredient",
+    "product": "Gluten-free pancake mix",
+    "label": {
+      "claims": [
+        "Gluten-Free",
+        "Good Source of Protein"
+      ],
+      "ingredients": [
+        "brown rice flour",
+        "buttermilk powder",
+        "egg white powder",
+        "baking soda",
+        "soy lecithin"
+      ],
+      "allergen_statement": "Contains: Milk, Egg",
+      "protein_g": 6.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "pancake-mix--natural_claim_no_rule",
+    "product": "Gluten-free pancake mix",
+    "label": {
+      "claims": [
+        "Gluten-Free",
+        "Good Source of Protein",
+        "All Natural"
+      ],
+      "ingredients": [
+        "brown rice flour",
+        "buttermilk powder",
+        "egg white powder",
+        "baking soda"
+      ],
+      "allergen_statement": "Contains: Milk, Egg",
+      "protein_g": 6.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "tofu-snack--clean",
+    "product": "Baked tofu snack",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "organic soybeans",
+        "water",
+        "calcium sulfate"
+      ],
+      "allergen_statement": "Contains: Soy",
+      "protein_g": 12.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "tofu-snack--allergen_not_declared",
+    "product": "Baked tofu snack",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "organic soybeans",
+        "water",
+        "calcium sulfate"
+      ],
+      "allergen_statement": null,
+      "protein_g": 12.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "allergen_not_declared"
+  },
+  {
+    "id": "tofu-snack--protein_claim_unsupported",
+    "product": "Baked tofu snack",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "organic soybeans",
+        "water",
+        "calcium sulfate"
+      ],
+      "allergen_statement": "Contains: Soy",
+      "protein_g": 3.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "protein_claim_unsupported"
+  },
+  {
+    "id": "tofu-snack--hidden_allergen_ingredient",
+    "product": "Baked tofu snack",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "organic soybeans",
+        "water",
+        "calcium sulfate",
+        "whey powder"
+      ],
+      "allergen_statement": "Contains: Soy",
+      "protein_g": 12.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "tofu-snack--natural_claim_no_rule",
+    "product": "Baked tofu snack",
+    "label": {
+      "claims": [
+        "High Protein",
+        "All Natural"
+      ],
+      "ingredients": [
+        "organic soybeans",
+        "water",
+        "calcium sulfate"
+      ],
+      "allergen_statement": "Contains: Soy",
+      "protein_g": 12.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "fruit-snack--clean",
+    "product": "Apple fruit snack",
+    "label": {
+      "claims": [],
+      "ingredients": [
+        "apple puree",
+        "sugar",
+        "pectin",
+        "citric acid"
+      ],
+      "allergen_statement": null,
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "fruit-snack--false_high_protein_added",
+    "product": "Apple fruit snack",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "apple puree",
+        "sugar",
+        "pectin",
+        "citric acid"
+      ],
+      "allergen_statement": null,
+      "protein_g": 2.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "false_high_protein_added"
+  },
+  {
+    "id": "fruit-snack--hidden_allergen_ingredient",
+    "product": "Apple fruit snack",
+    "label": {
+      "claims": [],
+      "ingredients": [
+        "apple puree",
+        "sugar",
+        "pectin",
+        "citric acid",
+        "soy lecithin"
+      ],
+      "allergen_statement": null,
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "fruit-snack--natural_claim_no_rule",
+    "product": "Apple fruit snack",
+    "label": {
+      "claims": [
+        "All Natural"
+      ],
+      "ingredients": [
+        "apple puree",
+        "sugar",
+        "pectin",
+        "citric acid"
+      ],
+      "allergen_statement": null,
+      "protein_g": null,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  },
+  {
+    "id": "tuna-pouch--clean",
+    "product": "Tuna pouch",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "tuna",
+        "water",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Fish",
+      "protein_g": 17.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "pass",
+    "violation_type": "none"
+  },
+  {
+    "id": "tuna-pouch--allergen_not_declared",
+    "product": "Tuna pouch",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "tuna",
+        "water",
+        "salt"
+      ],
+      "allergen_statement": null,
+      "protein_g": 17.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "allergen_not_declared"
+  },
+  {
+    "id": "tuna-pouch--protein_claim_unsupported",
+    "product": "Tuna pouch",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "tuna",
+        "water",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Fish",
+      "protein_g": 3.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "protein_claim_unsupported"
+  },
+  {
+    "id": "tuna-pouch--hidden_allergen_ingredient",
+    "product": "Tuna pouch",
+    "label": {
+      "claims": [
+        "High Protein"
+      ],
+      "ingredients": [
+        "tuna",
+        "water",
+        "salt",
+        "soy lecithin"
+      ],
+      "allergen_statement": "Contains: Fish",
+      "protein_g": 17.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "fail",
+    "violation_type": "hidden_allergen_ingredient"
+  },
+  {
+    "id": "tuna-pouch--natural_claim_no_rule",
+    "product": "Tuna pouch",
+    "label": {
+      "claims": [
+        "High Protein",
+        "All Natural"
+      ],
+      "ingredients": [
+        "tuna",
+        "water",
+        "salt"
+      ],
+      "allergen_statement": "Contains: Fish",
+      "protein_g": 17.0,
+      "gluten_ppm": null
+    },
+    "expected_overall": "review",
+    "violation_type": "natural_claim_no_rule"
+  }
+]
