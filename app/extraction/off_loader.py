@@ -1,11 +1,14 @@
 """Turns an Open Food Facts product record into a LabelData for the rule engine."""
+import html
 import math
 import re
 
 from app.rules.label import LabelData
 
 # "Contains: milk" is an allergen statement. "contains 2% or less of..." is not.
-CONTAINS_RE = re.compile(r"(?<!may )\bcontains?\b(?!\s*(?:\d|less|one or more))", re.I)
+CONTAINS_RE = re.compile(
+    r"(?<!may )\bcontains?\b(?!\s*(?:\d|<|less|one or more))", re.I
+)
 ADVISORY_RE = re.compile(
     r"\b(may contain|produced in|manufactured in|made in|processed in|"
     r"packaged in|allergen information|allergy advice)\b",
@@ -38,6 +41,7 @@ def split_ingredients(text: str) -> list[str]:
 
 def parse_label_text(text: str) -> tuple[list[str], str | None]:
     """Returns (ingredient list, 'Contains: ...' statement or None)."""
+    text = html.unescape(text)
     text = PREFIX_RE.sub("", " ".join(text.split()))
 
     cut = len(text)

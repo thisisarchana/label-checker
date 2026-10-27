@@ -53,3 +53,10 @@ def test_to_label_data_handles_nan_protein():
     label = to_label_data(record)
     assert label.protein_g is None
     assert label.claims == ["Gluten-Free"]
+    
+def test_html_escaped_less_than_is_not_a_contains_statement():
+    ingredients, statement = parse_label_text(
+        "Wheat dextrins, cellulose. Contains &lt;2%: magnesium stearate."
+    )
+    assert statement is None
+    assert "magnesium stearate" in " ".join(ingredients)

@@ -29,9 +29,10 @@ def test_oats_go_to_review():
     assert f.verdict == Verdict.REVIEW
 
 
-def test_wheat_starch_goes_to_review():
+def test_undeclared_wheat_starch_fails():
     f = check_gluten_free_claim("Gluten-Free", ["wheat starch", "sugar"])
-    assert f.verdict == Verdict.REVIEW
+    assert f.verdict == Verdict.FAIL
+    assert f.evidence["unsupported_items"] == ["wheat starch"]
 
 
 def test_high_ppm_fails_even_with_clean_ingredients():
