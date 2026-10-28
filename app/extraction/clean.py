@@ -2,13 +2,32 @@
 import html
 import re
 
-# Clauses that describe cross-contact, not ingredients. The gold labels ignore them.
+# Cross-contact warnings, not ingredients. The gold labels ignore them.
+# "may contain up to 2% water" is a processing note, so it is not matched.
 ADVISORY_CLAUSE_RE = re.compile(
-    r"\b(?:may contain|might contain|produced in|manufactured in|made in|"
-    r"processed in|packaged in|made on|manufactured on|processed on|"
-    r"shared equipment|shared facility)\b",
+    r"\b(?:may contain(?!\s+(?:up to|\d|less))|might contain|produced in|"
+    r"manufactured in|made in|processed in|packaged in|made on|"
+    r"manufactured on|processed on|shared equipment|shared facility)\b",
     re.I,
 )
+MAX_CLAUSE_CHARS = 250   # safety net: never delete a huge span because a period is missing
+
+
+def _clause_end(text: str, start: int) -> int:
+    """End of the warning: the sentence end, the enclosing bracket, or a length cap."""
+    limit = min(len(text), start + MAX_CLAUSE_CHARS)
+    depth = 0
+    for i in range(start, limit):
+        ch = text[i]
+        if ch in "([":
+            depth += 1
+        elif ch in ")]":
+            if depth == 0:
+                return i                 # closes the bracket the warning sits in
+            depth -= 1
+        elif ch == "." and depth == 0:
+            return i + 1
+    return limit
 
 
 def split_advisory(text: str | None) -> tuple[str, str]:
@@ -19,8 +38,7 @@ def split_advisory(text: str | None) -> tuple[str, str]:
         if match.start() < pos:
             continue
         kept.append(text[pos:match.start()])
-        end = text.find(".", match.end())
-        stop = len(text) if end == -1 else end + 1
+        stop = _clause_end(text, match.end())
         removed.append(text[match.start():stop])
         pos = stop
     kept.append(text[pos:])
@@ -28,5 +46,5 @@ def split_advisory(text: str | None) -> tuple[str, str]:
 
 
 def strip_advisory(text: str | None) -> str:
-    """Removes 'may contain ...' style sentences; keeps ingredients and 'Contains:' lines."""
+    """Removes cross-contact warnings; keeps ingredients and 'Contains:' lines."""
     return split_advisory(text)[0]
