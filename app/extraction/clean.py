@@ -11,15 +11,22 @@ ADVISORY_CLAUSE_RE = re.compile(
 )
 
 
-def strip_advisory(text: str | None) -> str:
-    """Removes 'may contain ...' style sentences; keeps ingredients and 'Contains:' lines."""
+def split_advisory(text: str | None) -> tuple[str, str]:
+    """Returns (text without cross-contact clauses, the clauses that were removed)."""
     text = " ".join(html.unescape(text or "").split())
-    kept, pos = [], 0
+    kept, removed, pos = [], [], 0
     for match in ADVISORY_CLAUSE_RE.finditer(text):
         if match.start() < pos:
             continue
         kept.append(text[pos:match.start()])
         end = text.find(".", match.end())
-        pos = len(text) if end == -1 else end + 1
+        stop = len(text) if end == -1 else end + 1
+        removed.append(text[match.start():stop])
+        pos = stop
     kept.append(text[pos:])
-    return " ".join("".join(kept).split())
+    return " ".join("".join(kept).split()), " ".join(removed)
+
+
+def strip_advisory(text: str | None) -> str:
+    """Removes 'may contain ...' style sentences; keeps ingredients and 'Contains:' lines."""
+    return split_advisory(text)[0]

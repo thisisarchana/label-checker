@@ -1,19 +1,33 @@
 ﻿id,product_name,source,before,after,added,removed,reason
-g016,Med thai peanut rice noodle cart pre-cooked rice noodles & sauce with vegetables & toppings,enriched,fish;milk;peanuts;sesame,milk;peanuts;sesame;shellfish,shellfish,fish,
-g025,Pesto pasta salad,enriched,fish;milk;sesame;shellfish;tree_nuts;wheat,fish;milk;peanuts;sesame;shellfish;tree_nuts;wheat,peanuts,,
-g026,31/40 cpto shrimp,enriched,,shellfish,shellfish,,
-g027,Mini Confetti Party Platter With Buttercreme Icing,random,wheat,egg;wheat,egg,,
-g031,Apple Pie,random,milk,egg;milk,egg,,
-g055,Shrimp ring,enriched,soy,shellfish;soy,shellfish,,
-g058,Provencal style wild seafood bouillabaisse,enriched,fish,shellfish,shellfish,fish,
-g060,Senbei,enriched,egg;fish;milk;soy;wheat,soy;wheat,,egg;fish;milk,
-g074,Cashews,enriched,tree_nuts,,,tree_nuts,
-g077,Coconut bar cookies,enriched,egg;milk;sesame;soy;wheat,soy;wheat,,egg;milk;sesame,coconut
-g083,Caesar pasta salad with white meat chicken,enriched,egg;milk;soy;wheat,egg;milk;wheat,,soy,natural flavor
-g090,Colorante para glaseado rojo,enriched,fish;milk;sesame;soy,,,fish;milk;sesame;soy,
-g098,"Cooked Shrimp Tail-Off, Peeled & Deveined",enriched,fish,shellfish,shellfish,fish,
-g106,Keto chocolate trail mix,enriched,egg;milk;sesame;soy;tree_nuts;wheat,peanuts;soy;tree_nuts,peanuts,egg;milk;sesame;wheat,"natural flavor, coconut"
-g108,Tilapia Fillets,enriched,soy,fish;soy,fish,,natural flavor
-g119,Tail-Off Cooked Shrimp,enriched,fish,shellfish,shellfish,fish,
-g127,,enriched,egg;fish;milk;sesame;shellfish;soy;wheat,egg;milk,,fish;sesame;shellfish;soy;wheat,
-g147,The original buttercrunch toffee,random,milk;soy,milk;soy;tree_nuts,tree_nuts,,natural flavor
+g012,Real Mayonnaise,enriched,egg;soy,egg,,soy,"natural flavor, oil"
+g016,Med thai peanut rice noodle cart pre-cooked rice noodles & sauce with vegetables & toppings,enriched,fish;milk;peanuts;sesame,fish;peanuts;sesame;shellfish,shellfish,milk,"shrimp past has shellfish, peanuts used as topping, sesame oil counts as sesame, anchovy is fish"
+g025,Pesto pasta salad,enriched,fish;milk;sesame;shellfish;tree_nuts;wheat,egg;milk;tree_nuts;wheat,egg,fish;sesame;shellfish,"added only the allergens from ""contains"", removed the ones from ""may contain"""
+g026,31/40 cpto shrimp,enriched,,shellfish,shellfish,,shrimp is considered shellfish
+g027,Mini Confetti Party Platter With Buttercreme Icing,random,wheat,egg;wheat,egg,,"oil (soybean), wheat flour has wheat, contains eggs"
+g031,Apple Pie,random,milk,egg;milk,egg,,added eggs because it was missed
+g034,"Chocolate Coconut Milk, Chocolate",random,milk,,,milk,"natural flavor, coconut, removed millk from allergens because coconut milk is made from plants"
+g039,BANANA SLICES,enriched,milk;soy,milk;peanuts;soy,peanuts,,"natural flavor, coconut, oil, added peanuts allergen"
+g041,Fannie May,random,milk;tree_nuts,milk;soy;tree_nuts,soy,,soy lecithin contains soy
+g042,Digestion Daily Mix 11oz,enriched,tree_nuts,peanuts;tree_nuts,peanuts,,"coconut, added peanuts allergen"
+g055,Shrimp ring,enriched,soy,shellfish,shellfish,soy,oil
+g058,Provencal style wild seafood bouillabaisse,enriched,fish,fish;shellfish,shellfish,,"wild pacific rockfish is considered fish by FDA, shrimp is shellfish"
+g060,Senbei,enriched,egg;fish;milk;soy;wheat,soy;wheat,,egg;fish;milk,"added only the allergens from ""contains"", removed the ones from ""may contain"""
+g063,Whole wheat pasta salad,random,milk;soy;wheat,milk;wheat,,soy,oil
+g076,Real food bar,enriched,milk,milk;peanuts,peanuts,,"natural flavor, oil"
+g077,Coconut bar cookies,enriched,egg;milk;sesame;soy;wheat,soy;wheat,,egg;milk;sesame,"coconut, added only allergens from ""contains"""
+g083,Caesar pasta salad with white meat chicken,enriched,egg;milk;soy;wheat,egg;milk;wheat,,soy,oil
+g090,Colorante para glaseado rojo,enriched,fish;milk;sesame;soy,,,fish;milk;sesame;soy,"removed ""may contain"" from allergens"
+g098,"Cooked Shrimp Tail-Off, Peeled & Deveined",enriched,fish,shellfish,shellfish,fish,shrimp is considered shellfish
+g106,Keto chocolate trail mix,enriched,egg;milk;sesame;soy;tree_nuts;wheat,peanuts;soy;tree_nuts,peanuts,egg;milk;sesame;wheat,"natural flavor, coconut added only from ""contains"" list and removed things that were in ""may contain"""
+g108,Tilapia Fillets,enriched,soy,fish,fish,soy,"natural flavor, oil"
+g109,Creamy coleslaw,random,egg;soy,egg,,soy,"natural flavor, oil"
+g115,Almondmilk Unsweetened Original,random,milk;tree_nuts,tree_nuts,,milk,"natural flavor, removed milk"
+g118,"Nonfat Greek Crunch Yogurt & Toppings, Peanut",enriched,milk;soy;wheat,milk;peanuts;soy;wheat,peanuts,,"natural flavor, added peanuts because ingredients contain roasted peanuts"
+g119,Tail-Off Cooked Shrimp,enriched,fish,shellfish,shellfish,fish,shrimp is considered shellfish
+g121,Maine lobster,random,milk,milk;shellfish,shellfish,,"natural flavor, added shellfish allergen because crabs are considered shellfish"
+g122,"Dockside Classics, Salmon Cakes",enriched,egg;fish;milk;soy;wheat,egg;fish;milk;wheat,,soy,oil
+g127,,enriched,egg;fish;milk;sesame;shellfish;soy;wheat,egg;milk,,fish;sesame;shellfish;soy;wheat,oil
+g138,Lite Peppercorn Ranch Dressing,random,egg;milk;soy,egg;milk,,soy,"natural flavor, oil"
+g139,Cheese Rolls,enriched,egg;milk;soy,egg;milk,,soy,oil
+g147,The original buttercrunch toffee,random,milk;soy,milk;soy;tree_nuts,tree_nuts,,"natural flavor, milk is in butter, macadamia nuts are tree nuts, soy is in soy lecithin"
+g148,Seafood Combination,enriched,fish,shellfish,shellfish,fish,shrimp is considered shellfish
