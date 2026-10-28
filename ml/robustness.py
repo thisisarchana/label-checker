@@ -3,6 +3,7 @@ import random
 import sys
 
 import joblib
+import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -10,13 +11,17 @@ from sklearn.multiclass import OneVsRestClassifier
 
 from app.extraction.clean import strip_advisory
 from eval.gold import ALLERGENS, PATHS, load_gold
+from app.rules.fuzzy_allergens import fuzzy_detect
 from eval.metrics import score
+from ml.build_training_data import PEANUT_OIL, SOY_OIL, oil_only
 from ml.compare_systems import keyword_with_oil_rule
 from ml.policy import apply_policy_labels
 from ml.train_tfidf import DATA, MODELS, best_thresholds, predict_sets
 
 NOISE_LEVELS = [0.0, 0.02, 0.05, 0.10]   # chance that each letter is corrupted
-SEED = "ocr-noise-v1"
+N_SEEDS = 5                               # independent noise draws per level
+SEED = "ocr-noise-v2"
+TO_GOLD = {"crustacean shellfish": "shellfish", "tree nuts": "tree_nuts", "soybeans": "soy"}
 CONFUSIONS = {"l": "1", "i": "l", "o": "0", "e": "c", "s": "5", "b": "6",
               "m": "rn", "u": "v", "a": "o", "t": "f"}
 
@@ -36,6 +41,17 @@ def ocr_noise(text: str, rate: float, rng: random.Random) -> str:
         else:
             out.append(ch)
     return "".join(out)
+
+
+def fuzzy_with_oil_rule(raw_text: str) -> set[str]:
+    """Fuzzy keyword matching plus the same oil policy as the exact version."""
+    text = strip_advisory(raw_text)
+    pred = {TO_GOLD.get(a, a) for a in fuzzy_detect(text)}
+    if oil_only(text, SOY_OIL, "soy"):
+        pred.discard("soy")
+    if oil_only(text, PEANUT_OIL, "peanut"):
+        pred.discard("peanuts")
+    return pred
 
 
 def char_model(train_df: pd.DataFrame, valid_df: pd.DataFrame) -> dict:
@@ -70,35 +86,41 @@ def main() -> int:
     char = char_model(apply_policy_labels(pd.read_parquet(DATA / "train.parquet")),
                       apply_policy_labels(pd.read_parquet(DATA / "valid.parquet")))
 
-    names = ["keyword + oil rule", "tfidf words", "tfidf characters",
-             "hybrid (keyword | words)", "hybrid (keyword | characters)"]
-    f1 = {n: [] for n in names}
-    recall = {n: [] for n in names}
-    for rate in NOISE_LEVELS:
-        noisy = [ocr_noise(t, rate, random.Random(f"{SEED}-{rate}-{gid}"))
-                 for gid, t in zip(gold.id, gold.ingredients_text)]
-        texts = [strip_advisory(t) for t in noisy]
-        keyword = [keyword_with_oil_rule(t) for t in noisy]
-        words = predict_sets(word["vectorizer"], word["model"], word["thresholds"], texts)
-        chars = predict_sets(char["vectorizer"], char["model"], char["thresholds"], texts)
-        systems = {
-            "keyword + oil rule": keyword,
-            "tfidf words": words,
-            "tfidf characters": chars,
-            "hybrid (keyword | words)": [k | w for k, w in zip(keyword, words)],
-            "hybrid (keyword | characters)": [k | c for k, c in zip(keyword, chars)],
-        }
-        for name, preds in systems.items():
-            result = score(y, preds, ALLERGENS)
-            f1[name].append(result["micro_f1"])
-            recall[name].append(result["micro_recall"])
+    names = ["keyword + oil rule", "fuzzy keyword + oil rule", "tfidf characters",
+             "hybrid (keyword | chars)", "hybrid (fuzzy kw | chars)"]
+    metrics = ("precision", "recall", "f1")
+    results = {m: {n: [[] for _ in NOISE_LEVELS] for n in names} for m in metrics}
+    for seed in range(N_SEEDS):
+        for i, rate in enumerate(NOISE_LEVELS):
+            noisy = [ocr_noise(t, rate, random.Random(f"{SEED}-{seed}-{rate}-{gid}"))
+                     for gid, t in zip(gold.id, gold.ingredients_text)]
+            texts = [strip_advisory(t) for t in noisy]
+            keyword = [keyword_with_oil_rule(t) for t in noisy]
+            fuzzy = [fuzzy_with_oil_rule(t) for t in noisy]
+            chars = predict_sets(char["vectorizer"], char["model"], char["thresholds"], texts)
+            systems = {
+                "keyword + oil rule": keyword,
+                "fuzzy keyword + oil rule": fuzzy,
+                "tfidf characters": chars,
+                "hybrid (keyword | chars)": [k | c for k, c in zip(keyword, chars)],
+                "hybrid (fuzzy kw | chars)": [k | c for k, c in zip(fuzzy, chars)],
+            }
+            for name, preds in systems.items():
+                r = score(y, preds, ALLERGENS)
+                results["precision"][name][i].append(r["micro_precision"])
+                results["recall"][name][i].append(r["micro_recall"])
+                results["f1"][name][i].append(r["micro_f1"])
 
-    header = f"{'system':32s}" + "".join(f"{f'{r:.0%} noise':>11s}" for r in NOISE_LEVELS)
-    for title, table in (("MICRO F1", f1), ("MICRO RECALL", recall)):
-        print(f"\n{title} on {len(gold)} gold products ({version} labels)")
+    header = f"{'system':28s}" + "".join(f"{f'{r:.0%} noise':>13s}" for r in NOISE_LEVELS)
+    for metric in ("f1", "recall", "precision"):
+        print(f"\nMICRO {metric.upper()} on {len(gold)} gold products ({version} labels), "
+              f"mean ± sd over {N_SEEDS} noise draws")
         print(header)
         for name in names:
-            print(f"{name:32s}" + "".join(f"{v:11.2f}" for v in table[name]))
+            cells = "".join(
+                f"{f'{np.mean(v):.2f}±{np.std(v):.2f}':>13s}" for v in results[metric][name]
+            )
+            print(f"{name:28s}{cells}")
     print("\nNoise is simulated (look-alike swaps, dropped and random letters), not real OCR output.")
     return 0
 
