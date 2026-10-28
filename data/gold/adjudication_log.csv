@@ -1,0 +1,19 @@
+﻿id,product_name,source,before,after,added,removed,reason
+g016,Med thai peanut rice noodle cart pre-cooked rice noodles & sauce with vegetables & toppings,enriched,fish;milk;peanuts;sesame,milk;peanuts;sesame;shellfish,shellfish,fish,
+g025,Pesto pasta salad,enriched,fish;milk;sesame;shellfish;tree_nuts;wheat,fish;milk;peanuts;sesame;shellfish;tree_nuts;wheat,peanuts,,
+g026,31/40 cpto shrimp,enriched,,shellfish,shellfish,,
+g027,Mini Confetti Party Platter With Buttercreme Icing,random,wheat,egg;wheat,egg,,
+g031,Apple Pie,random,milk,egg;milk,egg,,
+g055,Shrimp ring,enriched,soy,shellfish;soy,shellfish,,
+g058,Provencal style wild seafood bouillabaisse,enriched,fish,shellfish,shellfish,fish,
+g060,Senbei,enriched,egg;fish;milk;soy;wheat,soy;wheat,,egg;fish;milk,
+g074,Cashews,enriched,tree_nuts,,,tree_nuts,
+g077,Coconut bar cookies,enriched,egg;milk;sesame;soy;wheat,soy;wheat,,egg;milk;sesame,coconut
+g083,Caesar pasta salad with white meat chicken,enriched,egg;milk;soy;wheat,egg;milk;wheat,,soy,natural flavor
+g090,Colorante para glaseado rojo,enriched,fish;milk;sesame;soy,,,fish;milk;sesame;soy,
+g098,"Cooked Shrimp Tail-Off, Peeled & Deveined",enriched,fish,shellfish,shellfish,fish,
+g106,Keto chocolate trail mix,enriched,egg;milk;sesame;soy;tree_nuts;wheat,peanuts;soy;tree_nuts,peanuts,egg;milk;sesame;wheat,"natural flavor, coconut"
+g108,Tilapia Fillets,enriched,soy,fish;soy,fish,,natural flavor
+g119,Tail-Off Cooked Shrimp,enriched,fish,shellfish,shellfish,fish,
+g127,,enriched,egg;fish;milk;sesame;shellfish;soy;wheat,egg;milk,,fish;sesame;shellfish;soy;wheat,
+g147,The original buttercrunch toffee,random,milk;soy,milk;soy;tree_nuts,tree_nuts,,natural flavor

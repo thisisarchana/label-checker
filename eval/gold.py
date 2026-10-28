@@ -5,8 +5,10 @@ from pathlib import Path
 import pandas as pd
 
 GOLD_DIR = Path(__file__).resolve().parent.parent / "data" / "gold"
-LABELED = GOLD_DIR / "allergen_gold_labeled.csv"
+LABELED = GOLD_DIR / "allergen_gold_labeled.csv"            # blind first pass, never edited
+ADJUDICATED = GOLD_DIR / "allergen_gold_adjudicated.csv"    # corrected copy
 KEY = GOLD_DIR / "allergen_gold_key.parquet"
+PATHS = {"blind": LABELED, "adjudicated": ADJUDICATED}
 
 ALLERGENS = ["milk", "egg", "fish", "shellfish", "tree_nuts", "peanuts", "wheat", "soy", "sesame"]
 
@@ -39,9 +41,17 @@ def _read_csv(path: Path) -> pd.DataFrame:
     return pd.read_csv(path, dtype=str, encoding="latin-1").fillna("")
 
 
-def load_gold() -> tuple[pd.DataFrame, list[tuple[str, list[str]]]]:
+def version_from_args(argv: list[str]) -> str:
+    """'python -m eval.gold_baseline adjudicated' picks the corrected labels."""
+    version = argv[1] if len(argv) > 1 else "blind"
+    if version not in PATHS:
+        raise SystemExit(f"Unknown version '{version}'. Use: {', '.join(PATHS)}")
+    return version
+
+
+def load_gold(version: str = "blind") -> tuple[pd.DataFrame, list[tuple[str, list[str]]]]:
     """Returns the labeled products and a list of (id, unrecognized label words)."""
-    sheet = _read_csv(LABELED)
+    sheet = _read_csv(PATHS[version])
     key = pd.read_parquet(KEY)[["id", "code", "source"]]
     df = sheet.merge(key, on="id", how="left")
     if df.source.isna().any():

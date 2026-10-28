@@ -3,7 +3,7 @@ import sys
 
 from app.extraction.clean import strip_advisory
 from app.rules.allergen_crosscheck import _detect
-from eval.gold import ALLERGENS, load_gold
+from eval.gold import ALLERGENS, load_gold, version_from_args
 from eval.metrics import print_report, score
 
 TO_GOLD = {"crustacean shellfish": "shellfish", "tree nuts": "tree_nuts", "soybeans": "soy"}
@@ -15,7 +15,8 @@ def keyword_predict(text: str) -> set[str]:
 
 
 def main() -> int:
-    df, problems = load_gold()
+    version = version_from_args(sys.argv)
+    df, problems = load_gold(version)
     if problems:
         print("Fix these labels in the CSV, then rerun (allowed words: " + ", ".join(ALLERGENS) + ")")
         for gid, words in problems:
@@ -23,14 +24,14 @@ def main() -> int:
         return 1
 
     df["pred"] = [keyword_predict(t) for t in df.ingredients_text]
-    print(f"Gold set: {len(df)} products ({(df.source == 'random').sum()} random, "
+    print(f"Labels: {version}. Gold set: {len(df)} products ({(df.source == 'random').sum()} random, "
           f"{(df.source == 'enriched').sum()} enriched). "
           f"With no allergens: {(df.labels.str.len() == 0).sum()}.")
 
     rand = df[df.source == "random"]
-    print_report("KEYWORD BASELINE, random products only (use for precision)",
+    print_report(f"KEYWORD BASELINE [{version}], random products only (use for precision)",
                  score(rand.labels.tolist(), rand.pred.tolist(), ALLERGENS))
-    print_report("KEYWORD BASELINE, all products (use for per-allergen recall)",
+    print_report(f"KEYWORD BASELINE [{version}], all products (use for per-allergen recall)",
                  score(df.labels.tolist(), df.pred.tolist(), ALLERGENS))
     print("\nNote: the enriched products over-represent positives, so precision on the full set is inflated.")
 
