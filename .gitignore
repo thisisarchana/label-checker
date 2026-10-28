@@ -6,3 +6,4 @@ __pycache__/
 data/raw/
 data/gold/review_disagreements*.txt
 data/processed/
+models/
