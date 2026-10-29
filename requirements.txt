@@ -13,6 +13,7 @@ certifi==2025.8.3
 charset-normalizer==3.4.4
 click==8.2.1
 colorama==0.4.6
+colorlog==6.12.0
 contourpy==1.3.3
 cycler==0.12.1
 decorator==5.2.1
@@ -55,6 +56,9 @@ ml_dtypes==0.5.4
 namex==0.1.0
 narwhals==2.15.0
 numpy==2.4.1
+omegaconf==2.4.0
+onnxruntime==1.31.1
+opencv-python-headless==5.0.0.93
 openpyxl==3.1.5
 opt_einsum==3.4.0
 optree==0.19.0
@@ -68,6 +72,7 @@ prompt_toolkit==3.0.52
 protobuf==6.33.4
 pure_eval==0.2.3
 pyarrow==23.0.0
+pyclipper==1.4.0
 pydantic==2.11.8
 pydantic_core==2.33.2
 pydeck==0.9.1
@@ -80,6 +85,7 @@ pytz==2025.2
 PyYAML==6.0.3
 qrcode==8.2
 RapidFuzz==3.14.6
+rapidocr==3.10.0
 referencing==0.37.0
 requests==2.32.5
 rich==14.3.3
@@ -88,6 +94,7 @@ scikit-learn==1.8.0
 scipy==1.17.1
 seaborn==0.13.2
 setuptools==82.0.1
+shapely==2.2.0
 six==1.17.0
 smmap==5.0.2
 sniffio==1.3.1
@@ -100,6 +107,7 @@ termcolor==3.3.0
 threadpoolctl==3.6.0
 toml==0.10.2
 tornado==6.5.4
+tqdm==4.70.1
 traitlets==5.14.3
 typing-inspection==0.4.2
 typing_extensions==4.15.0
