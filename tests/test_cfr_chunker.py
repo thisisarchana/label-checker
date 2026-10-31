@@ -1,7 +1,8 @@
 import xml.etree.ElementTree as ET
 
-from rag.chunk_cfr import MAX_CHARS, blocks, build_chunks, label_blocks, level_of, split_long
-
+from rag.chunk_cfr import (
+    MAX_CHARS, RESERVED_RE, blocks, build_chunks, label_blocks, level_of, split_inline_first, split_long,
+)
 
 def test_levels_of_markers():
     assert level_of("a", None) == 1
@@ -57,3 +58,26 @@ def test_blocks_flattens_tables_and_skips_citation_notes():
     assert list(blocks(section)) == [
         "(a) Text italic end.", "(1) Inside extract.", "Name | Value\nFat | 65 g",
     ]
+    
+def test_inline_first_paragraph_is_separated_from_its_heading():
+    assert split_inline_first(["(c) Compliance. (1) When compliance applies."]) == [
+        "(c) Compliance.", "(1) When compliance applies.",
+    ]
+    assert split_inline_first(["(b) \u201cHigh\u201d claims. (1)(i) The term applies."])[0] == "(b) \u201cHigh\u201d claims."
+    plain = "(a) General requirements. Except as provided in paragraph (e) of this section, a claim may be made."
+    assert split_inline_first([plain]) == [plain]
+
+
+def test_long_group_with_inline_first_paragraph_cites_each_numbered_paragraph():
+    texts = ["(c) Compliance. (1) " + "alpha " * 100] + [f"({n}) " + "beta " * 100 for n in (2, 3, 4)]
+    chunks = build_chunks("101.91", label_blocks(split_inline_first(texts)))
+    assert [citation for citation, _ in chunks] == [
+        "101.91(c)(1)", "101.91(c)(2)", "101.91(c)(3)", "101.91(c)(4)",
+    ]
+    assert all(text.startswith("(c) Compliance.") for _, text in chunks)
+    assert all(len(text) <= MAX_CHARS for _, text in chunks)
+
+
+def test_reserved_paragraphs_are_recognized():
+    assert RESERVED_RE.match("(h) [Reserved]")
+    assert not RESERVED_RE.match("(h) Reserved for later use by the agency.")

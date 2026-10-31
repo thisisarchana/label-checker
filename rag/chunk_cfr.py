@@ -14,6 +14,9 @@ MAX_LEAD_CHARS = 400
 SKIP_TAGS = {"HEAD", "CITA", "EFFDNOT", "EDNOTE", "img", "br"}
 BLOCK_TAGS = {"P", "FP", "FP-1", "LI", "PSPACE"}
 MARKER_RE = re.compile(r"^\(([A-Za-z]+|\d+)\)")
+# "(c) Compliance. (1) When ..." is one paragraph in the XML, but (c) is the heading and (1) is its own paragraph.
+INLINE_FIRST_RE = re.compile(r"^(\([A-Za-z]+\)\s+[^()]{1,200}?\.)\s+(\(1\)(?:\s|\().*)$", re.S)
+RESERVED_RE = re.compile(r"^\([A-Za-z0-9]+\)\s*\[Reserved\]\.?$")
 ROMAN = {"i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x",
          "xi", "xii", "xiii", "xiv", "xv", "xvi", "xvii", "xviii", "xix", "xx"}
 
@@ -61,6 +64,15 @@ def level_of(marker: str, last_level1: str | None) -> int:
                    and ord(marker) == ord(last_level1) + 1)
         return 1 if follows else 3
     return 1
+
+
+def split_inline_first(texts: list[str]) -> list[str]:
+    """Separates a lettered heading from a numbered paragraph (1) that shares its text block."""
+    out = []
+    for text in texts:
+        match = INLINE_FIRST_RE.match(text)
+        out.extend(match.groups() if match else [text])
+    return out
 
 
 def label_blocks(texts: list[str]) -> list[tuple[str, int, str | None]]:
@@ -161,7 +173,9 @@ def chunk_file(path: Path) -> list[dict]:
         number = section.get("N")
         head = text_of(section.find("HEAD")) if section.find("HEAD") is not None else number
         heading = re.sub(r"^§\s*[\d.]+\s*", "", head)
-        pieces = build_chunks(number, label_blocks(list(blocks(section))))
+        texts = split_inline_first(list(blocks(section)))
+        pieces = [piece for piece in build_chunks(number, label_blocks(texts))
+                  if not RESERVED_RE.match(piece[1].strip())]
         for index, (citation, text) in enumerate(pieces, start=1):
             records.append({
                 "id": f"{number}-{index}",
