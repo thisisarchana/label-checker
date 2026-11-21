@@ -1,0 +1,30 @@
+id,question,expected_sections
+q01,"What percent of the Daily Value must a food contain to be called high in a nutrient?",101.54
+q02,"When can a label say good source of fiber or protein?",101.54
+q03,"What is the maximum gluten level allowed for a gluten-free claim?",101.91
+q04,"Can a product that contains wheat starch be labeled gluten-free?",101.91
+q05,"What does light or lite mean on a food label?",101.56
+q06,"What are the requirements for a low sodium claim?",101.61
+q07,"What are the requirements for a low fat or fat free claim?",101.62
+q08,"What are the requirements for a low calorie claim?",101.60
+q09,"What are implied nutrient content claims such as made with oat bran?",101.65
+q10,"What are the general principles for making nutrient content claims?",101.13
+q11,"How is the reference amount customarily consumed used to set a serving size?",101.12|101.9
+q12,"In what order must ingredients be listed on a food label?",101.4
+q13,"What must appear on the principal display panel of a package?",101.1
+q14,"Where must the name and address of the manufacturer or packer appear?",101.5
+q15,"How must the net quantity of contents be declared?",101.7
+q16,"How must the Nutrition Facts panel be formatted?",101.9
+q17,"What are the rules for labeling spices, flavorings, and colorings?",101.22
+q18,"What warning is required on food in a self-pressurized container?",101.17
+q19,"What health claim is allowed about calcium and osteoporosis?",101.72
+q20,"What are the requirements for a soy protein and heart disease health claim?",101.82
+q21,"When can a food be labeled fresh?",101.95
+q22,"How must the percentage of juice be declared on a juice drink?",101.30
+q23,"Which small businesses are exempt from nutrition labeling?",101.9|101.100
+q24,"Can a label make a health claim that FDA has not authorized?",101.71|101.14
+q25,"How must nutrition information be labeled on a dietary supplement?",101.36
+q26,"claim: high protein; protein: 3 g per serving",101.54
+q27,"claim: gluten-free; ingredient: wheat starch",101.91
+q28,"claim: low sodium; sodium: 500 mg per serving",101.61
+q29,"claim: reduced fat; light",101.56|101.62
