@@ -28,8 +28,19 @@ def test_validate_keeps_a_good_question_and_drops_bad_ones():
         row("Foods must contain less than 20 parts per million gluten according to the rules?"),
         row("Which cooking temperatures are best for baking frozen pizza at home?"),
         row("How much gluten can a product contain before it cannot be called gluten-free here?"),
+        row("When does using the word on a food package skip the usual restrictions on gluten?"),
     ]
-    kept, dropped = validate(rows, {"c1": SOURCE})
+    kept, dropped, rejected = validate(rows, {"c1": SOURCE})
     assert [r["question"] for r in kept] == [rows[0]["question"]]
     assert dropped == {"too short": 1, "mentions the source": 1, "copies the source text": 1,
-                       "not grounded in the source": 1, "near-duplicate": 1}
+                       "unrelated to the source": 1, "near-duplicate": 1, "vague reference": 1}
+    assert {r["reason"] for r in rejected} == set(dropped)
+
+
+def test_a_heavily_paraphrased_question_is_kept():
+    source = "Calcium intake may reduce the risk of osteoporosis, a condition of reduced bone mass."
+    kept, dropped, _ = validate(
+        [row("Which approved phrasing lets a manufacturer talk about the link between calcium and bone thinning?")],
+        {"c1": source},
+    )
+    assert len(kept) == 1 and not dropped

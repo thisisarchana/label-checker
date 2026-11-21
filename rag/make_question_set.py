@@ -17,6 +17,7 @@ CHUNKS = ROOT / "data" / "processed" / "cfr_chunks.jsonl"
 EVAL_DIR = ROOT / "data" / "rag_eval"
 RAW = EVAL_DIR / "synthetic_raw.jsonl"       # cache: one line per generated question
 FINAL = EVAL_DIR / "synthetic_questions.csv"
+DROPPED = EVAL_DIR / "synthetic_dropped.csv"    # for inspection only
 
 N_QUESTIONS = 120
 MAX_PER_SECTION = 4
@@ -24,8 +25,8 @@ MIN_CHARS = 250
 SEED = 21
 DELAY_SECONDS = 7        # free-tier requests per minute are limited
 MAX_COPIED_RUN = 6       # a question may not copy 6+ consecutive words from its source
-MIN_OVERLAP = 0.35       # share of the question's content words that appear in the source
 BANNED = ("section", "§", "paragraph", "excerpt", "passage", "regulation text", "cfr")
+VAGUE = ("a certain", "the word on", "the term on", "that term", "this term")
 
 PROMPT = """You are writing test questions for a search system over US food labeling regulation (21 CFR Part 101).
 
@@ -85,6 +86,10 @@ def ask(client, model: str, chunk: dict):
             return str(data["question"]).strip()
         except Exception as error:
             message = str(error)
+            if "503" in message or "UNAVAILABLE" in message:
+                print(f"Model busy; retrying {chunk['id']} shortly...")
+                time.sleep(20 * (attempt + 1))
+                continue
             if "429" in message or "RESOURCE_EXHAUSTED" in message:
                 if "perday" in message.lower().replace(" ", "").replace("_", ""):
                     print("Daily free-tier quota reached. Run this script again later; it resumes.")
@@ -122,8 +127,20 @@ def generate(client, model: str, chunks: list[dict]) -> bool:
     return True
 
 
-def validate(rows: list[dict], chunk_text: dict[str, str]) -> tuple[list[dict], Counter]:
-    kept, dropped, seen = [], Counter(), []
+def validate(rows: list[dict], chunk_text: dict[str, str]) -> tuple[list[dict], Counter, list[dict]]:
+    """Returns (kept rows, drop counts, dropped rows with the reason).
+
+    There is deliberately no word-overlap threshold: questions that paraphrase their source
+    ("bone thinning" for osteoporosis) are the valuable ones, and a strict overlap rule would
+    keep only questions that favor keyword search. One shared word is enough to catch a
+    question that has nothing to do with its source.
+    """
+    kept, rejected, dropped, seen = [], [], Counter(), []
+
+    def reject(row, reason):
+        dropped[reason] += 1
+        rejected.append({**row, "reason": reason})
+
     for row in rows:
         question = row["question"]
         q_words = words(question)
@@ -131,19 +148,21 @@ def validate(rows: list[dict], chunk_text: dict[str, str]) -> tuple[list[dict], 
         q_content = content_words(question)
         lowered = question.lower()
         if len(q_words) < 8:
-            dropped["too short"] += 1
+            reject(row, "too short")
         elif any(term in lowered for term in BANNED):
-            dropped["mentions the source"] += 1
+            reject(row, "mentions the source")
+        elif any(term in lowered for term in VAGUE):
+            reject(row, "vague reference")
         elif longest_shared_run(q_words, words(source)) >= MAX_COPIED_RUN:
-            dropped["copies the source text"] += 1
-        elif q_content and len(q_content & content_words(source)) / len(q_content) < MIN_OVERLAP:
-            dropped["not grounded in the source"] += 1
+            reject(row, "copies the source text")
+        elif not (q_content & content_words(source)):
+            reject(row, "unrelated to the source")
         elif any(len(q_content & other) / max(1, len(q_content | other)) > 0.7 for other in seen):
-            dropped["near-duplicate"] += 1
+            reject(row, "near-duplicate")
         else:
             seen.append(q_content)
             kept.append(row)
-    return kept, dropped
+    return kept, dropped, rejected
 
 
 def main() -> int:
@@ -158,16 +177,22 @@ def main() -> int:
 
     from google import genai
 
-    chunks = sample_chunks(load_chunks())
+    all_chunks = load_chunks()
+    chunks = sample_chunks(all_chunks)
     finished = generate(genai.Client(api_key=key), model, chunks)
 
     rows = [json.loads(line) for line in RAW.read_text(encoding="utf-8").splitlines()]
-    kept, dropped = validate(rows, {c["id"]: c["text"] for c in chunks})
+    kept, dropped, rejected = validate(rows, {c["id"]: c["text"] for c in chunks})
     with FINAL.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
         writer.writerow(["id", "question", "expected_sections", "source_chunk", "source_citation"])
         for number, row in enumerate(kept, start=1):
             writer.writerow([f"s{number:03d}", row["question"], row["section"], row["chunk_id"], row["citation"]])
+    with DROPPED.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["reason", "question", "source_citation"])
+        for row in rejected:
+            writer.writerow([row["reason"], row["question"], row["citation"]])
 
     print(f"\nGenerated {len(rows)} questions, kept {len(kept)}, dropped {sum(dropped.values())}: {dict(dropped)}")
     print(f"Sections covered: {len({r['section'] for r in kept})}   Wrote {FINAL}")
